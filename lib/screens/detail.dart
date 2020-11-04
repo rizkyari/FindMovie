@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:my_movies/http/detail_model.dart';
 
-class Detail extends StatefulWidget {
+class DetailScreen extends StatefulWidget {
   @override
-  _DetailState createState() => _DetailState();
+  _DetailScreenState createState() => _DetailScreenState();
 }
 
-class _DetailState extends State<Detail> {
+class _DetailScreenState extends State<DetailScreen> {
+  DetailResult detailResult;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detail"),
+        title: Text('Detail Movie'),
       ),
-      body: Center(
-        child: Text("This is Detail Page"),
-      ),
+      body: Container(),
     );
   }
 }

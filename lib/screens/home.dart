@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_movies/screens/detail.dart';
+import 'package:my_movies/screens/search.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -7,6 +7,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final myController = TextEditingController();
+  String value;
+
+  @override
+  void dispose(){
+    myController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
@@ -30,7 +39,12 @@ class _HomeState extends State<Home> {
             ),
             SizedBox(height: 20),
             TextField(
+              autofocus: false,
+              controller: myController,
               style: TextStyle(color: Colors.white),
+              onChanged: (text){
+                value = text;
+              },
               decoration: InputDecoration(
                 hintText: "Enter movies title Here",
                 hintStyle: TextStyle(color: Colors.white24),
@@ -51,7 +65,7 @@ class _HomeState extends State<Home> {
             RaisedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Detail();
+                  return Detail(value: value,);
                 }));
               },
               textColor: Colors.white,
