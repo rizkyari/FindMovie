@@ -14,8 +14,10 @@ class SearchPage extends StatelessWidget {
     final SearchBlock searchBlock = Provider.of<SearchBlock>(context);
     searchBlock.fetchPost(value);
     return Scaffold(
+      backgroundColor: Color(0xff1c262f),
       appBar: AppBar(
-        title: Text("Search"),
+        title: Text("Search Result"),
+        backgroundColor: Color(0xFF1B2C3B),
       ),
       body: searchBlock.listpost != null
           ? ListView.builder(
