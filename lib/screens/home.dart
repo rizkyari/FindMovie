@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
             RaisedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Detail(value: value,);
+                  return SearchPage(value:value);
                 }));
               },
               textColor: Colors.white,

@@ -1,58 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:my_movies/http/post_model.dart';
+import 'package:my_movies/component/cardSearch.dart';
+import 'package:my_movies/provider/search.dart';
 import 'package:my_movies/screens/detail.dart';
+import 'package:provider/provider.dart';
 
-class Detail extends StatefulWidget {
+class SearchPage extends StatelessWidget {
 
-  String value;
-  Detail({Key key,@required this.value}) : super(key: key);
-
-  @override
-  _DetailState createState() => _DetailState(value);
-}
-
-class _DetailState extends State<Detail> {
-
-  String value;
-  _DetailState(this.value);
+  final String value;
+  SearchPage({this.value});
 
   @override
   Widget build(BuildContext context) {
+    final SearchBlock searchBlock = Provider.of<SearchBlock>(context);
+    searchBlock.fetchPost(value);
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Detail"),
-        ),
-        body: FutureBuilder(
-          future: fetchPosts(value),
-          builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
-            if (snapshot.hasData) {
-              List<Post> posts = snapshot.data;
-              return new ListView(
-                  children: posts
-                      .map((post) => Card(
-                        child: InkWell(
-                          splashColor: Colors.green,
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context){
-                              return DetailScreen();
-                            }));
-                          },
-                          child: Container(
-                            width: 300,
-                            height: 500,
-                            child: Column(children: <Widget>[
-                          Image(image: NetworkImage(post.poster)),
-                          Text(post.title),
-                          Text(post.year),
-                        ],),
-                          ),
-                        )
-                      ))
-                      .toList());
-            } else if (snapshot.hasError) {
-              return snapshot.error;
-            }
-          },
-        ));
+      appBar: AppBar(
+        title: Text("Search"),
+      ),
+      body: searchBlock.listpost != null
+          ? ListView.builder(
+              itemCount: searchBlock.listpost.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: (){
+                    searchBlock.idPost = searchBlock.listpost[index].imdbId;
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailScreen(searchBlock.listpost[index].imdbId)));
+                  },
+                  child: cardSearch(
+                      (searchBlock.listpost[index].poster != "N/A" ? searchBlock.listpost[index].poster : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png"),
+                      searchBlock.listpost[index].title,
+                      searchBlock.listpost[index].year),
+                );
+              },
+            )
+          : Center(child: CircularProgressIndicator()),
+    );
   }
 }
