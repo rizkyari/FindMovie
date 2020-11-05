@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_movies/component/drawer.dart';
 import 'package:my_movies/screens/search.dart';
 
 class Home extends StatefulWidget {
@@ -25,8 +26,11 @@ class _HomeState extends State<Home> {
           title: Text("My Movie"),
           actions: <Widget>[
             IconButton(
-                icon: Icon(Icons.search, color: Colors.white), onPressed: null)
+                icon: Icon(Icons.settings, color: Colors.white), onPressed: null)
           ]),
+      drawer: Drawer(
+        child: MainDrawer(),
+      ),    
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(

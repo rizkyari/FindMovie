@@ -29,7 +29,8 @@ class _DetailScreenState extends State<DetailScreen> {
         backgroundColor: Color(0xFF1B2C3B),
       ),
       body: post != null
-          ? SingleChildScrollView(
+          ? Builder(builder: (context){
+            return SingleChildScrollView(
               child: Container(
                 margin: EdgeInsets.all(20),
                 child: Column(
@@ -43,6 +44,8 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                     RaisedButton.icon(
                         onPressed: (){
+                          SnackBar text = SnackBar(content: Text(post.title + " is added to your favorite lisst"),);
+                          Scaffold.of(context).showSnackBar(text);
                           setState((){
                             favoriteNotifier.addFavorite(Favorite(post.title,post.poster,post.year,post.imdbId));
                           });
@@ -78,7 +81,8 @@ class _DetailScreenState extends State<DetailScreen> {
                   ],
                 ),
               ),
-            )
+            );
+          })
           : Center(child: CircularProgressIndicator()),
     );
   }

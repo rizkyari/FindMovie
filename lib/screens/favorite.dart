@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_movies/component/drawer.dart';
 import 'package:my_movies/notifier/favorite_notifier.dart';
 import 'package:my_movies/provider/search.dart';
 import 'package:provider/provider.dart';
@@ -17,12 +18,16 @@ class _ListFavoriteState extends State<ListFavorite> {
     return Scaffold(
       appBar: AppBar(
           title: Text('My Favorite Movie'), backgroundColor: Color(0xFF1B2C3B)),
+      drawer: Drawer(
+        child: MainDrawer(),
+      ),
       body: Container(
         margin: EdgeInsets.all(20),
         child: Column(
           children: <Widget>[
+            (favoriteNotifier.favoriteList.length < 1 ? Text('Choose your favorite movies', style: TextStyle(fontSize: 15),):Text('')),
             Container(
-              height: 500,
+              height: 450,
               child: ListView.builder(
                 itemBuilder: (BuildContext context, int index) => Card(
                   child: Container(
