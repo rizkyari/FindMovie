@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:my_movies/model/favorite_model.dart';
 import 'package:my_movies/model/post_model.dart';
@@ -29,25 +30,30 @@ class _DetailScreenState extends State<DetailScreen> {
         backgroundColor: Color(0xFF1B2C3B),
       ),
       body: post != null
-          ? Builder(builder: (context){
-            return SingleChildScrollView(
-              child: Container(
-                margin: EdgeInsets.all(20),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Text(
-                        post.title,
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ? Builder(builder: (context) {
+              return SingleChildScrollView(
+                child: Container(
+                  margin: EdgeInsets.all(20),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text(
+                          post.title,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                    RaisedButton.icon(
-                        onPressed: (){
-                          SnackBar text = SnackBar(content: Text(post.title + " is added to your favorite lisst"),);
+                      RaisedButton.icon(
+                        onPressed: () {
+                          SnackBar text = SnackBar(
+                            content: Text(post.title +
+                                " is added to your favorite lisst"),
+                          );
                           Scaffold.of(context).showSnackBar(text);
-                          setState((){
-                            favoriteNotifier.addFavorite(Favorite(post.title,post.poster,post.year,post.imdbId));
+                          setState(() {
+                            favoriteNotifier.addFavorite(Favorite(post.title,
+                                post.poster, post.year, post.imdbId));
                           });
                         },
                         icon: Icon(Icons.favorite),
@@ -55,34 +61,54 @@ class _DetailScreenState extends State<DetailScreen> {
                         color: Colors.pink,
                         textColor: Colors.white,
                         splashColor: Colors.red,
-                    ),
-                    (post.poster != 'N/A' ? Image.network(post.poster) : Text('no image available')),
-                    SizedBox(height: 10,),
-                    Text('Release date : ' +
-                      post.year,
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(height: 10,),
-                    Text('Plot', style: TextStyle(fontSize:18, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
-                    Text(post.plot, style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-                    SizedBox(height:8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(post.runtime + ' | '),
-                        Text(post.rated + ' | '),
-                        Text(post.language + ' | '),
-                        Text('IMDB Rating : '+post.imdbRating)
-                      ],
-                    ),
-                    SizedBox(height:10),
-                    Text('Directors : '+ post.director, style: TextStyle(fontSize: 16), textAlign: TextAlign.center),
-                    Text('Actors'+ post.actor, style: TextStyle(fontSize: 16), textAlign: TextAlign.center)
-                  ],
+                      ),
+                      (post.poster != 'N/A'
+                          ? Image.network(post.poster)
+                          : Text('no image available')),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Release date : ' + post.year,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Plot',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        post.plot,
+                        style: TextStyle(fontSize: 18),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 10),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text("${post.runtime} | ${post.rated}"),
+                          Text(post.runtime + ' | '),
+                          Text(post.rated + ' | '),
+                          Text(post.language + ' | ',textAlign: TextAlign.center,),
+                          Text('IMDB Rating : ' + post.imdbRating),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Text('Directors : ' + post.director,
+                          style: TextStyle(fontSize: 16),
+                          textAlign: TextAlign.center),
+                      Text('Actors' + post.actor,
+                          style: TextStyle(fontSize: 16),
+                          textAlign: TextAlign.center)
+                    ],
+                  ),
                 ),
-              ),
-            );
-          })
+              );
+            })
           : Center(child: CircularProgressIndicator()),
     );
   }
